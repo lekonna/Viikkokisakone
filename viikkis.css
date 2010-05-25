@@ -1,7 +1,38 @@
-table, th, td
+table
 {
 
 font-family:verdana;
 font-size:20px;
 border: 1px solid black;
+}
+td { border: 1px solid black;}
+
+#container {
+    margin-left:20px;
+    font-family:verdana;
+    font-size:14px;
+    
+}
+#tasoitus_taulu {
+    float:left;
+    background-color:rgb(244,255,244);
+    border:1px solid rgb(144,144,144);
+    padding:10px;
+}
+#infotaulu {
+    width:400px;
+    margin-left:10px;
+    padding:10px;
+    background-color:rgb(255,244,244);
+    float:left;
+    border:1px solid rgb(144,144,144);
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+table#kiessitaulu {
+    font-family:arial;
+    font-size:12px;
+    background-color:white;
+    border:1px solid black;
 }

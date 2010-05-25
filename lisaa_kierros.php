@@ -12,7 +12,9 @@
 <dd>
 <select name="rata">
 <?php
-    include("config.php");    
+    include("config.php");
+    include("engine.php");
+    
     global $settings;
     $db = $settings['DB_ADDRESS'];
     $user = $settings['DB_USERNAME'];
@@ -80,90 +82,9 @@
          } else {
              echo mysql_error();
        return false;
-    }
-    }
-    function laske_tasoitus( $pelaaja ) {
-        
-        global $settings;
-        /* katotaan monta kiessiä pelaaja on pelannut ja sen perusteella otetaan x parasta */
-        $query = sprintf("SELECT count(*) FROM %sKiessi WHERE pelaaja=%d",$settings['DB_PREFIX'],$pelaaja);
-        
-        $result = mysql_query($query);
-        if (!$result) {
-            echo mysql_error();
-            return false;
         }
-        $row = mysql_fetch_row($result);
-        
-        switch ($row[0]) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                $rounds_to_use = 1;
-                break;
-            case 7:
-            case 8:
-                $rounds_to_use = 2;
-                break;
-            case 9:
-            case 10:
-                $rounds_to_use = 3;
-                break;
-            case 11:
-            case 12:
-                $rounds_to_use = 4;
-                break;
-            case 13:
-            case 14:
-                $rounds_to_use = 5;
-                break;
-           default:
-                $rounds_to_use = 6;
     }
-        
-        
-        $query = sprintf("SELECT tulos,rata from %sKiessi where pelaaja=%d ORDER BY tulos ASC LIMIT %d",$settings['DB_PREFIX'],$pelaaja,$rounds_to_use);
-        $result2 = mysql_query($query);
-        if(!$result2){
-            echo mysql_error();
-            return false;
-        }
-        /* sitte lasketaa diffikset */
-        $diffit = array();
-        while ($row = mysql_fetch_assoc($result2))
-        {
-                
-            /* tarvitaan radan slope ja rating */
-            $query2 = sprintf("SELECT course_rating,slope_rating from %sRata where id=%d",$settings['DB_PREFIX'],$row['rata']);
-            $result3 = mysql_query($query2);
-            if(!$result3){
-                echo mysql_error();
-            return false;
-            }
-            $rata = mysql_fetch_assoc($result3);
-          
-            $diff = ($row['tulos']-$rata['course_rating'])*64/$rata['slope_rating'];
-        
-            array_push($diffit,$diff);            
-        }
-        
-        
-        $tasoitus = (array_sum($diffit)/count($diffit))*0.96;
-        
-        
-        $query = sprintf("UPDATE %sTasoitus_taulu set tasoitus=%2f where pelaaja=%d",$settings['DB_PREFIX'],$tasoitus,$pelaaja);
-        
-        
-        $result3 = mysql_query($query);
-            if(!$result3){
-                echo mysql_error();
-            return false;
-            }
-    }
-
+    
     function LisaaKierros() {
         global $settings;
         echo '<table>';

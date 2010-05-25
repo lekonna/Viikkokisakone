@@ -4,7 +4,9 @@
         <link rel=stylesheet href="viikkis.css" type="text/css">
     </head>
     <body>
+        <div class="menubar">
             <? include ("menu.php"); ?>
+        </div>
     <?
 include("config.php");    
     global $settings;
