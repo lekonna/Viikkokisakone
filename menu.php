@@ -13,4 +13,8 @@
     <li>
         <a href="lisaa_rata.php">Lisää Rata</a>
     </li>
+    <li>
+        <a href="printti.php">Printattava tasoitus</a>
+    </li>
+
 </ul>
